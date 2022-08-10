@@ -1,22 +1,34 @@
 import { Application } from "pixi.js";
+import { MainGameScenes } from "../scenes/MainGameScenes";
 import { Key } from "../types";
 import { GameObject } from "./GameObject";
+import { Laser } from "./Laser";
 
 export class LaserCannon extends GameObject {
     graph;
+    size;
 
     constructor(position: { x: number, y: number }) {
         super(position)
         this.graph = this._drawGraph(this._imageArr[0]);
+        this.size = this._takeSize(this._imageArr[0]);
     }
 
-    public handleInput(pressed: Key[]) {
+    public handleInput(pressed: Key[], scene: MainGameScenes) {
+        // 向左移動
         if (pressed.includes(Key.Left)) {
             this.position.x--
-            return;
         }
-        if (pressed.includes(Key.Right)) {
+        // 向右移動
+        else if (pressed.includes(Key.Right)) {
             this.position.x++
+        }
+        // 射擊，如果畫面上沒有 Laser 才射
+        if (pressed.includes(Key.Space)) {
+            let laser1 = new Laser({ x: this.position.x + 5, y: this.position.y - 4 });
+            if (!scene.hasCharacter(laser1)) {
+                scene.addCharacter(laser1);
+            }
             return;
         }
     }
@@ -36,10 +48,7 @@ export class LaserCannon extends GameObject {
             this.position.x, this.position.y);
     }
 
-    // 覆寫 update 不要讓他執行東西
-    // update(_frameTime: number): void {
-    //     return;
-    // }
+    // private _canShoot = true;
 
     // 定義圖片來源
     _imageArr = [

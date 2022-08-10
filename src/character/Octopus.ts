@@ -2,10 +2,12 @@ import { GameObject } from "./GameObject";
 
 export class Octopus extends GameObject {
     graph;
+    size;
 
     constructor(position: { x: number, y: number }) {
         super(position)
         this.graph = this._drawGraph(this._imageArr[0]);
+        this.size = this._takeSize(this._imageArr[0]);
     }
 
     // 定義圖片來源

@@ -1,16 +1,19 @@
 import { IGameObject } from "../interface/IGameObject";
 import { Application, Graphics } from "pixi.js"
-import { Key, Vector } from "../types";
+import { Vector } from "../types";
 
 export abstract class GameObject implements IGameObject {
     public abstract graph: Graphics;
+    public abstract size: Vector;
     public position: Vector;
+    public dead: boolean;
 
     constructor(position: { x: number, y: number }) {
         this.position = {
             x: position.x || 0,
             y: position.y || 0
         }
+        this.dead = false;
     }
 
     /**
@@ -57,7 +60,7 @@ export abstract class GameObject implements IGameObject {
     private _timeOut = 0;
 
     // 定義圖片來源
-    protected abstract _imageArr: number[][][] ;
+    protected abstract _imageArr: number[][][];
 
     // 畫圖的 mathods
     protected _drawGraph(image: number[][]): Graphics {
@@ -76,5 +79,14 @@ export abstract class GameObject implements IGameObject {
             }
         }
         return graphics;
+    }
+
+    /**
+     * 獲得這個角色的大小，然後把它放進 this.size
+     * @param image 這角色的圖片
+     * @returns 大小
+     */
+    protected _takeSize(image: number[][]): Vector {
+        return ({ x: image[0].length, y: image.length });
     }
 }
