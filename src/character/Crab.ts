@@ -1,6 +1,7 @@
-import { GameObject } from "./GameObject";
+import { CharacterType } from "../types";
+import { Enemy } from "./prototype/Enemy";
 
-export class Crab extends GameObject {
+export class Crab extends Enemy {
     graph;
     size;
 

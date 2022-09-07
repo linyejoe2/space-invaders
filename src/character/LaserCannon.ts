@@ -1,12 +1,13 @@
 import { Application } from "pixi.js";
 import { MainGameScenes } from "../scenes/MainGameScenes";
-import { Key } from "../types";
-import { GameObject } from "./GameObject";
+import { CharacterType, Key } from "../types";
+import { GameObject } from "./prototype/GameObject";
 import { Laser } from "./Laser";
 
 export class LaserCannon extends GameObject {
     graph;
     size;
+    type:CharacterType = "laser";
 
     constructor(position: { x: number, y: number }) {
         super(position)
